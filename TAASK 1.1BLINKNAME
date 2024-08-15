@@ -1,0 +1,99 @@
+const int builtInLedPin = LED_BUILTIN;
+const int buttonPin=2;
+
+const int shortBlink = 200;
+const int longBlink = 3 * shortBlink;
+const int ElementDelay = shortBlink;
+const int LetterDelay = 3 * shortBlink;
+
+bool ledState=false;
+void setup() {
+  Serial.begin(9600);
+  pinMode(builtInLedPin, OUTPUT);
+  pinMode(buttonPin,INPUT_PULLUP);
+
+  delay(1500);
+}
+
+void loop() {
+
+
+  Serial.print("LED State: ");
+  Serial.println(ledState);
+  int buttonState=digitalRead(buttonPin);
+  if(buttonState==LOW){
+    ledState=!ledState;
+    delay(75);
+  }
+
+  if (ledState) {
+    blinkS();
+    blinkA();
+    blinkM();
+    blinkB();
+    blinkH();
+    blinkA();
+    blinkV();
+  }
+}
+
+void onLedChange() {
+  Serial.println("LED state changed from IoT Cloud");
+}
+
+void blinkShort() {
+  digitalWrite(builtInLedPin, HIGH);
+  delay(shortBlink);
+  digitalWrite(builtInLedPin, LOW);
+  delay(ElementDelay);
+}
+
+void blinkLong() {
+  digitalWrite(builtInLedPin, HIGH);
+  delay(longBlink);
+  digitalWrite(builtInLedPin, LOW);
+  delay(ElementDelay);
+}
+
+void blinkS() {
+  blinkShort();
+  blinkShort();
+  blinkShort();
+  delay(LetterDelay);
+}
+
+void blinkA() {
+  blinkShort();
+  blinkLong();
+  delay(LetterDelay);
+}
+
+void blinkM() {
+  blinkLong();
+  blinkLong();
+  delay(LetterDelay);
+}
+
+void blinkB() {
+  blinkLong();
+  blinkShort();
+  blinkShort();
+  blinkShort();
+  delay(LetterDelay);
+}
+
+void blinkH() {
+  blinkShort();
+  blinkShort();
+  blinkShort();
+  blinkShort();
+  delay(LetterDelay);
+}
+
+void blinkV() {
+  blinkShort();
+  blinkShort();
+  blinkShort();
+  blinkLong();
+  delay(LetterDelay);
+}
